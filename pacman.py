@@ -25,7 +25,7 @@ ghosts = [
     [vector(100, 160), vector(0, -5)],
     [vector(100, -160), vector(-5, 0)],
 ]
-# fmt: off
+"""Se cambia el tablero"""
 tiles = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
@@ -106,18 +106,20 @@ def world():
                 path.goto(x + 10, y + 10)
                 path.dot(5, 'gold')
 
+"""Función para hacer los fantasmas más listos"""                
 def ghost_move(point, course):
     if valid(point + course):
             point.move(course)
     else:
-        # Se mueve a la derecha
+        """Se mueve a la derecha""""
         if point.x < pacman.x:
             movimiento = [vector(10, 0), vector(0, 10)] if point.y < pacman.y else [vector(10, 0), vector(0, -10)]
         else:
-            # Se mueve izquierda
+            """Se mueve a la izquierda"""
             movimiento = [vector(-10, 0), vector(0, 10)] if point.y < pacman.y else [vector(-10, 0), vector(0, -10)]
         up()
-        # Selecciona aleatoriamente a donde moverse
+        
+        """Selecciona aleatoriamente a donde moverse"""
         plan = choice(movimiento)
         course.x = plan.x
         course.y = plan.y
@@ -230,7 +232,7 @@ def move():
         dot(20, 'red')
 
     update()
-
+    """Se cambian los parametros para hacer que se muevan más rapido"""
     for point, course in ghosts:
         if abs(pacman - point) < 5:
             return
