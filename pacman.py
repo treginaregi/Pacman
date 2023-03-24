@@ -117,7 +117,7 @@ def ghost_move(point, course):
             # Se mueve izquierda
             movimiento = [vector(-10, 0), vector(0, 10)] if point.y < pacman.y else [vector(-10, 0), vector(0, -10)]
         up()
-        # Selecciona aleatoriamente a dobde moverse
+        # Selecciona aleatoriamente a donde moverse
         plan = choice(movimiento)
         course.x = plan.x
         course.y = plan.y
@@ -125,7 +125,7 @@ def ghost_move(point, course):
     dot(20, 'red')
 
 def move():
-    """Move pacman and all ghosts."""
+    "Move pacman and all ghosts."
     writer.undo()
     writer.write(state['score'])
 
@@ -150,18 +150,82 @@ def move():
     for point, course in ghosts:
         if valid(point + course):
             point.move(course)
+        #opciones:
         else:
-            options = [
-                vector(5, 0),
-                vector(-5, 0),
-                vector(0, 5),
-                vector(0, -5),
-            ]
-            plan = choice(options)
+            option1 = vector(5, 0)
+            option2 = vector(-5, 0)
+            option3 = vector(0, 5)
+            option4 = vector(0, -5)
+
+        
+            if abs(pacman.x - point.x) > abs(pacman.y - point.y):
+                #elige opcion 2 
+                if pacman.x < point.x:
+                    plan = option2
+                #elige opcion 1 
+                elif pacman.x > point.x:
+                    plan = option1
+                
+                course.x = plan.x
+                course.y = plan.y
+                
+                if valid(point + course):
+                    point.move(course)
+                else:
+                    if pacman.y < point.y:
+                        plan = option4
+                    #elige opcion 3 
+                    elif pacman.y > point.y:
+                        plan = option3
+
+                    
+            
+            elif abs(pacman.x - point.x) < abs(pacman.y - point.y):
+                #elige opcion 4
+                if pacman.y < point.y:
+                    plan = option4
+                #elige opcion 3
+                elif pacman.y > point.y:
+                    plan = option3
+                
+                course.x = plan.x
+                course.y = plan.y
+                
+                if valid(point + course):
+                    point.move(course)
+                else:
+                    #elige opcion 2
+                    if pacman.x < point.x:
+                        plan = option2
+                    #elige opcion 1
+                    elif pacman.x > point.x:
+                        plan = option1
+                    
+
+            
+            
+            elif pacman.x == point.x:
+                #elige opcion 4
+                if pacman.y < point.y:
+                    plan = option4
+                #elige opcion 3
+                elif pacman.y > point.y:
+                    plan = option3
+                    
+               
+            elif pacman.y == point.y:
+                #elige opcion 2
+                if pacman.x < point.x:
+                    plan = option2
+                #elige opcion 1
+                elif pacman.x > point.x:
+                    plan = option1
+                    
             course.x = plan.x
             course.y = plan.y
 
         up()
+        
         goto(point.x + 10, point.y + 10)
         dot(20, 'red')
 
@@ -171,7 +235,7 @@ def move():
         if abs(pacman - point) < 5:
             return
 
-    ontimer(move, 10)
+    ontimer(move, 10) #cambia la velocidad
 
 
 def change(x, y):
