@@ -106,25 +106,6 @@ def world():
                 path.goto(x + 10, y + 10)
                 path.dot(5, 'gold')
 
-"""Función para hacer los fantasmas más listos"""                
-def ghost_move(point, course):
-    if valid(point + course):
-            point.move(course)
-    else:
-        """Se mueve a la derecha""""
-        if point.x < pacman.x:
-            movimiento = [vector(10, 0), vector(0, 10)] if point.y < pacman.y else [vector(10, 0), vector(0, -10)]
-        else:
-            """Se mueve a la izquierda"""
-            movimiento = [vector(-10, 0), vector(0, 10)] if point.y < pacman.y else [vector(-10, 0), vector(0, -10)]
-        up()
-        
-        """Selecciona aleatoriamente a donde moverse"""
-        plan = choice(movimiento)
-        course.x = plan.x
-        course.y = plan.y
-    goto(point.x + 10, point.y + 10)
-    dot(20, 'red')
 
 def move():
     "Move pacman and all ghosts."
